@@ -108,7 +108,7 @@ namespace System
                 // I'm Stuck Here
 				// It's great that 8+ tuple items recognize the extension method
 				// But how do I deal with TRest??
-                // return ((ValueTuple<T>)tuple).Contains(item);
+				return ((ValueTuple<T>)tuple).Contains(item);
             }
 
             throw new Exception("So close yet so far!");
