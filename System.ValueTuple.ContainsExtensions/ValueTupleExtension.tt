@@ -1,0 +1,58 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+
+namespace System
+{
+    public static class ValueTupleExtension
+    {
+
+<#
+for(int i = 1; i <= 7; i++){
+#>
+
+        public static bool Contains<T>(this ValueTuple<<# for(int j = 1; j <= i; j++) { Write($"T{(j != i ? ", ":"")}");  }#>> tuple, T item) where T : IComparable
+        {
+
+            if (<# for(int j = 1; j <= i; j++) { Write($"tuple.Item{j}.CompareTo(item) == 0{(j != i ? " || " : "")}");  }#>)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+<#
+}
+#>
+
+        public static bool Contains<T, TRest>(this ValueTuple<T, T, T, T, T, T, T, TRest> tuple, T item) where T : IComparable where TRest : struct
+        {
+
+            if (tuple.Item1.CompareTo(item) == 0 || tuple.Item2.CompareTo(item) == 0 || tuple.Item3.CompareTo(item) == 0 || tuple.Item4.CompareTo(item) == 0 || tuple.Item5.CompareTo(item) == 0 || tuple.Item6.CompareTo(item) == 0 || tuple.Item7.CompareTo(item) == 0)
+            {
+                return true;
+            }
+
+            return StructToValueTuple(tuple.Rest, item);
+        }
+
+        private static bool StructToValueTuple<T, TRest>(TRest tuple, T item) where T : IComparable where TRest : struct
+        {
+            if (tuple is ValueTuple<T>)
+            {
+                // I'm Stuck Here
+				// It's great that 8+ tuple items recognize the extension method
+				// But how do I deal with TRest??
+                // return ((ValueTuple<T>)tuple).Contains(item);
+            }
+
+            throw new Exception("So close yet so far!");
+        }
+
+    }
+}

@@ -1,0 +1,43 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace System.ValueTuple.ContainsExtensions.Test
+{
+    [TestClass]
+    public class ValueTupleExtensionTest_Decimal
+    {
+
+<#
+for(int i = 2; i <= 7; i++){
+#>
+        [TestMethod]
+        public void Test_<#Write($"{i}");#>_decimal_true()
+        {
+
+            var i = 1d;
+            Assert.IsTrue((<# for(int j = 1; j <= i; j++) { Write($"{j}d{(j != i ? ", " : "")}");  }#>).Contains(i));
+
+        }
+
+        [TestMethod]
+        public void Test_<#Write($"{i}");#>_decimal_false()
+        {
+
+            var i = 0d;
+            Assert.IsFalse((<# for(int j = 1; j <= i; j++) { Write($"{j}d{(j != i ? ", " : "")}");  }#>).Contains(i));
+
+        }
+
+<#
+}
+#>
+
+    }
+}

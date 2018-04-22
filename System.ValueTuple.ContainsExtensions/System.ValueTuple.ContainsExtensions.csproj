@@ -2,6 +2,38 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>System.ValueTuple.Contains</PackageId>
+    <Authors>Keith Voels</Authors>
+    <Company />
+    <Product>System.ValueTuple.ContainsExtensions</Product>
+    <Description>Provides a .Contains() extension for ValueTuple. This combined with the build in shorthand for ValueTuple in C# 7 this allows you to write code like:
+
+int i = 3;
+if((1, 2, 3).Contains(i))
+{
+...</Description>
+    <Version>1.0.0-beta1</Version>
+    <PackageTags>ValueTuple</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="ValueTupleExtension.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ValueTupleExtension.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ValueTupleExtension.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ValueTupleExtension.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
 
 </Project>
