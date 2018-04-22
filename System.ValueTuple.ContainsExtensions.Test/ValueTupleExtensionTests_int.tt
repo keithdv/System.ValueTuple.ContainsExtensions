@@ -15,16 +15,17 @@ namespace System.ValueTuple.ContainsExtensions.Test
     {
 
 <#
-for(int i = 2; i <= 25; i++){
+for(int i = 2; i <= 50; i++){
 #>
         [TestMethod]
         public void Test_<#Write($"{i}");#>_int_true()
         {
 
-            var i = <#=i#>;
 			var tuple = (<# for(int j = 1; j <= i; j++) { Write($"{j}{(j != i ? ", " : "")}");  }#>);
-            Assert.IsTrue(tuple.Contains(i));
-
+			for(int x = 1; x <= <#=i#>; x++)
+			{
+	            Assert.IsTrue(tuple.Contains(x));
+			}
         }
 
         [TestMethod]
